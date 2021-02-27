@@ -13,6 +13,7 @@ namespace vanwall
 {
     class Program
     {
+        const int DEFAULT_PARALLEL_THREADS = 10;
         static async Task Main(string[] args)
         {
             UxCore.ShareMessage(MessageType.WishToShare, "Hello, vanwall starting up...");
@@ -25,8 +26,14 @@ namespace vanwall
             await FortunaInstance.InitializePrngAsync();
             
 
-            Task t = Task.Run(() => CoinCore.StartGenerationAsync(8));
-            UxCore.ShareMessage(MessageType.WishToShare, "Keys are now generating on a parallel thread.");
+            Task t = Task.Run(() => CoinCore.StartGenerationAsync(DEFAULT_PARALLEL_THREADS));
+            UxCore.ShareMessage(
+                MessageType.WishToShare,
+                string.Format(
+                    "Keys are now generating on {0} parallel threads.",
+                    DEFAULT_PARALLEL_THREADS
+                )
+            );
 
 /* for debugging we give it 30 seconds
             // UxCore.WaitForExit();

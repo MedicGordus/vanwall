@@ -90,7 +90,7 @@ namespace vanwall.crypto
             return FortunaInstance.Rng.RandomData(length);
         }
 
-        private static SemaphoreSlim RngLock = new SemaphoreSlim(0,1);
+        private static SemaphoreSlim RngLock = new SemaphoreSlim(1,1);
 
         ///<summary>
         /// CSPRNG bytes.
