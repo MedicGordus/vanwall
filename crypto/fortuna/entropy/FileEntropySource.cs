@@ -1,5 +1,6 @@
 ﻿using static Fortuna.FortunaCore;
 
+using Fortuna.crypt;
 using Fortuna.rand;
 using System;
 using System.IO;

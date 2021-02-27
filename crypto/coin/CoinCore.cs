@@ -95,7 +95,7 @@ namespace vanwall.crypto.coin
 
         public static async Task GenerateKeysAsync()
         {
-            byte[] privateKeyBytes = CryptoCore.RetrieveRandomBytes(32);
+            byte[] privateKeyBytes = await CryptoCore.RetrieveRandomBytesAsync(32);
             byte[] publicKeyBytes = GetPublicKey(privateKeyBytes);
 
             // stage: ByteStage.RawBytes

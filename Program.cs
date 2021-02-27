@@ -26,6 +26,7 @@ namespace vanwall
             
 
             Task t = Task.Run(() => CoinCore.StartGenerationAsync(8));
+            UxCore.ShareMessage(MessageType.WishToShare, "Keys are now generating on a parallel thread.");
 
 /* for debugging we give it 30 seconds
             // UxCore.WaitForExit();

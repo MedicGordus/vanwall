@@ -1,5 +1,6 @@
 ﻿using static Fortuna.FortunaCore;
 
+using Fortuna.crypt;
 using Fortuna.rand;
 
 using System;
@@ -71,7 +72,7 @@ namespace vanwall.crypto.fortuna.entropy
                 if (buffer.Length <= 32)
                     return buffer;
                 else
-                    return Hasher.ComputeSha2Hash(buffer);
+                    return Hasher.Compute(buffer);
             }
 
             return null;

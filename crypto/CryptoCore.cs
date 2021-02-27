@@ -3,6 +3,8 @@ using vanwall.crypto.fortuna;
 using SHA3Core.Keccak;
 
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace vanwall.crypto
 {
@@ -86,6 +88,24 @@ namespace vanwall.crypto
             }
 */
             return FortunaInstance.Rng.RandomData(length);
+        }
+
+        private static SemaphoreSlim RngLock = new SemaphoreSlim(0,1);
+
+        ///<summary>
+        /// CSPRNG bytes.
+        ///</summary>
+        public static async Task<byte[]> RetrieveRandomBytesAsync(int length)
+        {
+            await RngLock.WaitAsync();
+            try
+            {
+                return FortunaInstance.Rng.RandomData(length);
+            }
+            finally
+            {
+                RngLock.Release();
+            }
         }
     }
 

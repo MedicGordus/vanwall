@@ -1,5 +1,6 @@
 ﻿using static Fortuna.FortunaCore;
 
+using Fortuna.crypt;
 using Fortuna.rand;
 
 using System;
@@ -27,7 +28,7 @@ namespace vanwall.crypto.fortuna.entropy
             {
                 byte[] oldKey = key;
                 Random.NextBytes(key);
-                Encryptor.UpdateKey(Hasher.ComputeSha2Hash(AppendByteArrays(key,oldKey)));
+                Encryptor.UpdateKey(Hasher.Compute(AppendByteArrays(key,oldKey)));
 
                 Random.NextBytes(Encryptor.Encrypt(buffer));
                 await Task.Delay(670).ConfigureAwait(false);
