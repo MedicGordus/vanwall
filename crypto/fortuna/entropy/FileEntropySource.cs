@@ -16,7 +16,34 @@ namespace vanwall.crypto.fortuna.entropy
 
         public FileEntropySource(Prng prng, byte sourceId, string ioPath):base(prng, sourceId)
         {
-            _ = GenerateEntropyAsync(ioPath);
+            string destinationPath;
+
+            if(!File.Exists(ioPath))
+            {
+                throw new ArgumentException(
+                    string.Format(
+                        "File '{0}' does not exist. Unable to start file entropy source.",
+                        ioPath
+                    )
+                );
+            }
+
+            destinationPath = File.ReadAllText(ioPath);
+
+            if(!Directory.Exists(destinationPath))
+            {
+                throw new ArgumentException(
+                    string.Format(
+                        "Directory specified in file '{0}' ('{1}') does not exist. Unable to start file entropy source.",
+                        ioPath,
+                        destinationPath
+                    )
+                );
+            }
+
+            destinationPath = Path.Combine(destinationPath, "fortuna.io");
+
+            _ = GenerateEntropyAsync(destinationPath);
         }
 
         protected async Task GenerateEntropyAsync(string filePath)
@@ -49,7 +76,7 @@ namespace vanwall.crypto.fortuna.entropy
 
                 byte[] difference = BitConverter.GetBytes(DateTime.Now.Ticks - timeStamp);
 
-                await Task.Delay(9000).ConfigureAwait(false);
+                await Task.Delay(9000, Cts.Token).ConfigureAwait(false);
 
                 EntropyReceived(new byte[] { difference[0], difference[1] });
             } while (Cts == null || !Cts.Token.IsCancellationRequested);

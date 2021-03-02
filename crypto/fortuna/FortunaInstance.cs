@@ -42,10 +42,9 @@ namespace vanwall.crypto.fortuna
             UxCore.ShareMessage(MessageType.WishToShare, "Adding Clock Entropy Source...");
             Entropies.Add(new ClockEntropySource(output, sourceId)); sourceId++;
 
-/* removed because of SSD
             UxCore.ShareMessage(MessageType.WishToShare, "Adding File Entropy Source...");
             Entropies.Add(new FileEntropySource(output, sourceId, IO_PATH)); sourceId++;
-*/
+
             UxCore.ShareMessage(MessageType.WishToShare, "Adding Insecure Random Entropy Source...");
             Entropies.Add(new InsecureRandomEntropySource(output, sourceId)); sourceId++;
 

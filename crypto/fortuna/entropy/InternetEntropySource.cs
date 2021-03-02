@@ -41,7 +41,7 @@ namespace vanwall.crypto.fortuna.entropy
                         {
                             bigDelay = (int)(bigDelay * 1.5);
                         }
-                        await Task.Delay(bigDelay).ConfigureAwait(false);
+                        await Task.Delay(bigDelay, Cts.Token).ConfigureAwait(false);
                     }
                 } while (Cts == null || !Cts.Token.IsCancellationRequested);
             }
